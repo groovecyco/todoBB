@@ -1,0 +1,43 @@
+<template>
+  <!-- cant do 2 way binding with store state property so binding in to value -->
+  <v-text-field
+    :value="$store.state.search"
+    @input="$store.commit('setSearch', $event)"
+    @focus="searchClosed = false"
+    @blur="searchClosed = true"
+    class="mt-1 expanding-search"
+    :class="{ closed: searchClosed && !$store.state.search }"
+    prepend-inner-icon="mdi-magnify"
+    dense
+    filled
+    placeholder="Search"
+    clearable
+  ></v-text-field>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      searchClosed: true,
+    };
+  },
+};
+</script>
+
+<style lang="sass">
+.expanding-search
+  transition: max-width 0.3s
+  .v-input__slot
+    &:before, &:after
+      border-color: transparent !important
+  .v-input__control
+    color: transparent !important
+    .v-input__icon
+      cursor: pointer
+  &.closed
+    max-width: 45px
+    .v-input__slot
+      background: transparent !important
+</style>
+
